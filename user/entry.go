@@ -1,15 +1,21 @@
 package user
 
 import "fmt"
+import "api/jwt"
 
 type User struct {
 	Name string
 	Age  int
 }
 
-func (u User) Create() bool {
+func (u User) Create() string {
 	fmt.Println(u.Name, "has been created")
-	return true
+	token, err := jwt.CreateToken(u.Name)
+	if err != nil {
+		return ""
+	}
+
+	return token
 }
 
 func (u User) Update() {
